@@ -12,10 +12,14 @@ typedef int t_bool;
 
 # define INVALID_NUMBER (-1)
 
+typedef int t_error;
+
 enum e_errors
 {
-	WRONG_NUM_OF_ARGS = 1,
-	INVALID_ARGUMENTS = 2,
+	SUCCESS,
+	WRONG_NUM_OF_ARGS,
+	INVALID_ARGUMENTS,
+	ERROR,
 };
 
 typedef struct s_rules
@@ -30,9 +34,9 @@ typedef struct s_rules
 
 typedef struct s_philospher
 {
-	int number;
+	int index;
 	int time_start_last_meal;
-}
+}				t_philosopher;
 
 typedef int	t_fork;
 
@@ -50,5 +54,10 @@ t_bool	ft_isdigit(int c);
 /* debug */
 
 void	print_rules(t_rules rules);
+void	print_philos(t_philosopher *philos, int num_philos);
+
+/* philosophers */
+
+t_error	init_philosophers(t_philosopher **philo, int num_of_philo);
 
 #endif

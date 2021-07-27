@@ -1,7 +1,8 @@
 SRCS_FOLDER = src/
-SRCS_LIST = parsing.c \
-			parsing_utils.c	\
-			debug.c
+SRCS_LIST = parsing.c 				\
+			parsing_utils.c			\
+			debug.c 				\
+			philosophers.c
 SRCS = $(addprefix $(SRCS_FOLDER), $(SRCS_LIST))
 NAME = philo
 HEADER = includes
@@ -20,6 +21,7 @@ $(NAME) : $(OBJS) $(HEADER) main.c
 
 clean:
 	$(RM) $(OBJS)
+	$(RM) -r $(NAME).dSYM
 
 fclean: clean
 	$(RM) $(NAME)

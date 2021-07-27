@@ -13,3 +13,13 @@ void print_rules(t_rules rules)
 	else
 		printf("\tKO\n");
 }
+
+void	print_philos(t_philosopher *philos, int num_philos)
+{
+	int	i;
+
+	i = -1;
+	while (++i < num_philos)
+		printf("philo number %d, last meal: %d\n",\
+				philos[i].index, philos[i].time_start_last_meal);
+}
