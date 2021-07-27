@@ -1,2 +1,4 @@
 *.swp
 philo
+*.o
+*.dSYM

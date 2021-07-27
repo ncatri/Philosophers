@@ -1,5 +1,7 @@
 SRCS_FOLDER = src/
-SRCS_LIST = parsing.c
+SRCS_LIST = parsing.c \
+			parsing_utils.c	\
+			debug.c
 SRCS = $(addprefix $(SRCS_FOLDER), $(SRCS_LIST))
 NAME = philo
 HEADER = includes
@@ -14,7 +16,7 @@ CFLAGS = -Werror -Wall -Wextra -g -pthread -I $(HEADER)
 all: $(NAME)
 
 $(NAME) : $(OBJS) $(HEADER) main.c
-	$(CC) $(CFLAGS) main.c -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) main.c -o $(NAME)
 
 clean:
 	$(RM) $(OBJS)
