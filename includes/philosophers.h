@@ -29,16 +29,17 @@ typedef struct s_rules
 	int	time_to_eat;
 	int	time_to_sleep;
 	int	number_of_times_each_philosopher_must_eat;
+
 	t_bool	valid;
 }				t_rules;
 
 typedef struct s_philospher
 {
-	int index;
-	int time_start_last_meal;
+	int			index;
+	pthread_t	thread_id;
+	int			time_start_last_meal;
+	t_rules		*rules;
 }				t_philosopher;
-
-typedef int	t_fork;
 
 /* parsing */
 
@@ -54,10 +55,15 @@ t_bool	ft_isdigit(int c);
 /* debug */
 
 void	print_rules(t_rules rules);
-void	print_philos(t_philosopher *philos, int num_philos);
+void	print_philos(t_philosopher *philos, int num_of_philos);
 
 /* philosophers */
 
-t_error	init_philosophers(t_philosopher **philo, int num_of_philo);
+t_error	init_philosophers(t_philosopher **philo, t_rules *rules);
+t_error	init_forks(pthread_mutex_t **forks, int num_of_philo);
+void	free_forks(pthread_mutex_t *forks, int num_of_philo);
+
+void	*dinner(void *philosopher);
+void	threads_join(t_philosopher *philosopher, int number_of_philosophers);
 
 #endif
