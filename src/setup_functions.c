@@ -1,5 +1,15 @@
 #include "philosophers.h"
 
+t_error	start_dinner(t_rules *rules, t_philosopher **philo, pthread_mutex_t **forks)
+{
+	gettimeofday(&rules->start, NULL);
+	if (init_forks(forks, rules->number_of_philosophers) == ERROR)
+		return (ERROR);
+	if (init_philosophers(philo, rules) == ERROR)
+		return (ERROR);
+	return (SUCCESS);
+}
+
 t_error	init_philosophers(t_philosopher **philo, t_rules *rules)
 {
 	int	i;
@@ -53,6 +63,7 @@ void	free_forks(pthread_mutex_t *forks, int num_of_philo)
 	i = -1;
 	while (++i < num_of_philo)
 		pthread_mutex_destroy(forks + i);
+	free(forks);
 }
 
 void	threads_join(t_philosopher *philosophers, int num_of_philo)

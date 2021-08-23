@@ -4,6 +4,11 @@ t_rules	parse_arguments(int argc, char **argv)
 {
 	t_rules	rules;
 
+	if (argc < 5 || argc > 6)
+	{
+		rules.valid = FALSE;
+		return (rules);
+	}
 	rules.number_of_philosophers = get_number(argv[1]);
 	rules.time_to_die = get_number(argv[2]);
 	rules.time_to_eat = get_number(argv[3]);
