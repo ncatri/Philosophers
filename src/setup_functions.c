@@ -1,9 +1,9 @@
 #include "philosophers.h"
 
-t_error	start_dinner(t_rules *rules, t_philosopher **philo, pthread_mutex_t **forks)
+t_error	start_dinner(t_rules *rules, t_philosopher **philo)
 {
 	gettimeofday(&rules->start, NULL);
-	if (init_forks(forks, rules->number_of_philosophers) == ERROR)
+	if (init_forks(&rules->forks, rules->number_of_philosophers) == ERROR)
 		return (ERROR);
 	if (init_philosophers(philo, rules) == ERROR)
 		return (ERROR);
@@ -19,6 +19,7 @@ t_error	init_philosophers(t_philosopher **philo, t_rules *rules)
 	*philo = malloc(sizeof(t_philosopher) * rules->number_of_philosophers);
 	if (*philo == NULL)
 		return (ERROR);
+	rules->synchro = FALSE;
 	i = -1;
 	while (++i < rules->number_of_philosophers)
 	{
@@ -27,8 +28,8 @@ t_error	init_philosophers(t_philosopher **philo, t_rules *rules)
 		(*philo)[i].rules = rules;
 		if (pthread_create(&(*philo)[i].thread_id, NULL, dinner, &(*philo)[i]) != 0)
 			return (ERROR);
-//		pthread_join((*philo)[i].thread_id, NULL);
 	}
+	rules->synchro = TRUE;
 	return (SUCCESS);
 }
 
