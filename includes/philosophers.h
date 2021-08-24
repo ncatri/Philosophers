@@ -25,11 +25,11 @@ enum e_errors
 
 typedef struct s_rules
 {
-	int	number_of_philosophers;
+	int	num_of_philo;
 	int	time_to_die;
 	int	time_to_eat;
 	int	time_to_sleep;
-	int	number_of_times_each_philosopher_must_eat;
+	int	num_must_eat;
 	
 	pthread_mutex_t	*forks;
 	struct timeval	start;
@@ -43,6 +43,7 @@ typedef struct s_philosopher
 	int			index;
 	pthread_t	thread_id;
 	int			time_start_last_meal;
+	int			num_of_eats;
 	t_rules		*rules;
 }				t_philosopher;
 
@@ -66,16 +67,23 @@ void	print_philos(t_philosopher *philos, int num_of_philos);
 
 t_error	start_dinner(t_rules *rules, t_philosopher **philo);
 t_error	init_philosophers(t_philosopher **philo, t_rules *rules);
-t_error	init_forks(pthread_mutex_t **forks, int num_of_philo);
+t_error	init_mutexes(t_rules *rules);
 void	free_forks(pthread_mutex_t *forks, int num_of_philo);
 
 void	*dinner(void *philosopher);
-void	threads_join(t_philosopher *philosopher, int number_of_philosophers);
-void	eat(t_philosopher *philo);
+void	threads_join(t_philosopher *philosopher, t_rules rules);
+void	eating(t_philosopher *philo);
+void	sleeping(t_philosopher *philo);
 
 /* utils */
 
 int		get_timestamp(const struct timeval origin);
 void	print_message(const char *msg, t_philosopher *philo);
+void	my_usleep(int target);
+
+/* check_ending */
+
+void	check_end(t_rules *rules, t_philosopher *philo);
+t_bool	max_eatings_reached(t_rules *rules, t_philosopher *philo);
 
 #endif

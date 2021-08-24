@@ -14,11 +14,25 @@ int	get_timestamp(const struct timeval origin)
 	return (result);
 }
 
+void	my_usleep(int target)
+{
+	int				time;
+	struct timeval	tmp;
+
+	gettimeofday(&tmp, NULL);
+	time = 0;
+	while (time < target)
+	{
+		usleep(20);
+		time = get_timestamp(tmp);
+	}
+}
+
 void	print_message(const char *msg, t_philosopher *philo)
 {
 	pthread_mutex_lock(&philo->rules->speak);
 	printf("%d philo %d %s\n", 
 			get_timestamp(philo->rules->start), philo->index, msg);
-//	pthread_mutex_unlock(&philo->rules->speak);
+	pthread_mutex_unlock(&philo->rules->speak);
 
 }

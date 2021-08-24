@@ -4,7 +4,8 @@ SRCS_LIST = parsing.c 				\
 			debug.c 				\
 			setup_functions.c		\
 			dinner.c				\
-			utils.c
+			utils.c					\
+			check_ending.c
 SRCS = $(addprefix $(SRCS_FOLDER), $(SRCS_LIST))
 NAME = philo
 HEADER = includes
