@@ -12,6 +12,7 @@ t_error	start_dinner(t_rules *rules, t_philosopher **philo)
 t_error	init_philosophers(t_philosopher **philo, t_rules *rules)
 {
 	int	i;
+	int	err_check;
 
 	*philo = malloc(sizeof(t_philosopher) * rules->num_of_philo);
 	if (*philo == NULL)
@@ -22,11 +23,12 @@ t_error	init_philosophers(t_philosopher **philo, t_rules *rules)
 	while (++i < rules->num_of_philo)
 	{
 		(*philo)[i].index = i + 1;
-//		(*philo)[i].time_start_last_meal = 0;
 		gettimeofday(&(*philo)[i].time_start_last_meal, NULL);
 		(*philo)[i].rules = rules;
 		(*philo)[i].num_of_eats = 0;
-		if (pthread_create(&(*philo)[i].thread_id, NULL, dinner, &(*philo)[i]) != 0)
+		err_check = pthread_mutex_init(&(*philo)[i].eating, NULL);
+		if (pthread_create(&(*philo)[i].thread_id, NULL, dinner, &(*philo)[i]) != 0
+				|| err_check != 0 )
 			return (ERROR);
 	}
 	rules->synchro = TRUE;
@@ -66,16 +68,4 @@ void	free_forks(pthread_mutex_t *forks, int num_of_philo)
 	while (++i < num_of_philo)
 		pthread_mutex_destroy(forks + i);
 	free(forks);
-}
-
-void	threads_join(t_philosopher *philosophers, t_rules rules)
-{
-	int	i;
-
-	if (rules.synchro)
-	{
-		i = -1;
-		while (++i < rules.num_of_philo)
-			pthread_join(philosophers[i].thread_id, NULL);
-	}
 }

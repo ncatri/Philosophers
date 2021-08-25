@@ -46,6 +46,7 @@ typedef struct s_philosopher
 	pthread_t		thread_id;
 	struct timeval	time_start_last_meal;
 	int				num_of_eats;
+	pthread_mutex_t	eating;
 	t_rules			*rules;
 }				t_philosopher;
 
@@ -73,7 +74,6 @@ t_error	init_mutexes(t_rules *rules);
 void	free_forks(pthread_mutex_t *forks, int num_of_philo);
 
 void	*dinner(void *philosopher);
-void	threads_join(t_philosopher *philosopher, t_rules rules);
 void	eating(t_philosopher *philo);
 void	sleeping(t_philosopher *philo);
 

@@ -40,6 +40,7 @@ t_bool is_one_is_starving(t_rules *rules, t_philosopher *philo)
 		eat_timestamp = get_timestamp(philo[i].time_start_last_meal);
 		if (eat_timestamp > rules->time_to_die)
 		{
+			pthread_mutex_lock(&philo->eating);
 			print_message("died", &philo[i], LOCK);
 			return (TRUE);
 		}

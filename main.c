@@ -8,10 +8,8 @@ int main(int argc, char **argv)
 	rules = parse_arguments(argc, argv);
 	if (!rules.valid)
 		return (INVALID_ARGUMENTS);	
-	start_dinner(&rules, &philosophers);
-	//print_philos(philosophers, rules.number_of_philosophers); // debug
-
-	//threads_join(philosophers, rules);
+	if (start_dinner(&rules, &philosophers) == ERROR)
+		return (EXIT_FAILURE);
 	check_end(&rules, philosophers);
 	free_forks(rules.forks, rules.num_of_philo);
 	free(philosophers);
