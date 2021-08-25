@@ -22,7 +22,8 @@ t_error	init_philosophers(t_philosopher **philo, t_rules *rules)
 	while (++i < rules->num_of_philo)
 	{
 		(*philo)[i].index = i + 1;
-		(*philo)[i].time_start_last_meal = 0;
+//		(*philo)[i].time_start_last_meal = 0;
+		gettimeofday(&(*philo)[i].time_start_last_meal, NULL);
 		(*philo)[i].rules = rules;
 		(*philo)[i].num_of_eats = 0;
 		if (pthread_create(&(*philo)[i].thread_id, NULL, dinner, &(*philo)[i]) != 0)

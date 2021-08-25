@@ -8,6 +8,9 @@ void	check_end(t_rules *rules, t_philosopher *philo)
 	{
 		if (rules->num_must_eat >= 0 && max_eatings_reached(rules, philo))
 			break;
+		if (is_one_is_starving(rules, philo))
+			break;
+		usleep(1000);
 	}
 }
 
@@ -24,4 +27,22 @@ t_bool	max_eatings_reached(t_rules *rules, t_philosopher *philo)
 			max_reached = FALSE;
 	}
 	return (max_reached);
+}
+
+t_bool is_one_is_starving(t_rules *rules, t_philosopher *philo)
+{
+	int		i;
+	int		eat_timestamp;
+
+	i = -1;
+	while (rules->synchro && ++i < rules->num_of_philo)
+	{
+		eat_timestamp = get_timestamp(philo[i].time_start_last_meal);
+		if (eat_timestamp > rules->time_to_die)
+		{
+			print_message("died", &philo[i], LOCK);
+			return (TRUE);
+		}
+	}
+	return (FALSE);
 }

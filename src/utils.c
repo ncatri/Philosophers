@@ -28,11 +28,11 @@ void	my_usleep(int target)
 	}
 }
 
-void	print_message(const char *msg, t_philosopher *philo)
+void	print_message(const char *msg, t_philosopher *philo, t_bool lock)
 {
 	pthread_mutex_lock(&philo->rules->speak);
 	printf("%d philo %d %s\n", 
 			get_timestamp(philo->rules->start), philo->index, msg);
-	pthread_mutex_unlock(&philo->rules->speak);
-
+	if (lock == UNLOCK)
+		pthread_mutex_unlock(&philo->rules->speak);
 }

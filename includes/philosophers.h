@@ -12,6 +12,8 @@ typedef int	t_bool;
 # define FALSE (0)
 
 # define INVALID_NUMBER (-1)
+# define LOCK (0)
+# define UNLOCK (1)
 
 typedef int	t_error;
 
@@ -40,11 +42,11 @@ typedef struct s_rules
 
 typedef struct s_philosopher
 {
-	int			index;
-	pthread_t	thread_id;
-	int			time_start_last_meal;
-	int			num_of_eats;
-	t_rules		*rules;
+	int				index;
+	pthread_t		thread_id;
+	struct timeval	time_start_last_meal;
+	int				num_of_eats;
+	t_rules			*rules;
 }				t_philosopher;
 
 /* parsing */
@@ -78,12 +80,13 @@ void	sleeping(t_philosopher *philo);
 /* utils */
 
 int		get_timestamp(const struct timeval origin);
-void	print_message(const char *msg, t_philosopher *philo);
+void	print_message(const char *msg, t_philosopher *philo, t_bool lock);
 void	my_usleep(int target);
 
 /* check_ending */
 
 void	check_end(t_rules *rules, t_philosopher *philo);
 t_bool	max_eatings_reached(t_rules *rules, t_philosopher *philo);
+t_bool	is_one_is_starving(t_rules *rules, t_philosopher *philo);
 
 #endif
