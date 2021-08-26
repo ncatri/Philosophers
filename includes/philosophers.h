@@ -27,15 +27,15 @@ enum e_errors
 
 typedef struct s_rules
 {
-	int	num_of_philo;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	num_must_eat;
-	
+	int				num_of_philo;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				num_must_eat;
+
 	pthread_mutex_t	*forks;
 	struct timeval	start;
-	pthread_mutex_t speak;
+	pthread_mutex_t	speak;
 	t_bool			synchro;
 	t_bool			valid;
 }				t_rules;
@@ -71,11 +71,11 @@ void	print_philos(t_philosopher *philos, int num_of_philos);
 t_error	start_dinner(t_rules *rules, t_philosopher **philo);
 t_error	init_philosophers(t_philosopher **philo, t_rules *rules);
 t_error	init_mutexes(t_rules *rules);
-void	free_forks(pthread_mutex_t *forks, int num_of_philo);
+void	destroy_and_free_mutexes(t_rules *rules, t_philosopher *philos);
 
 void	*dinner(void *philosopher);
 void	eating(t_philosopher *philo);
-void	sleeping(t_philosopher *philo);
+void	sleeping_and_thinking(t_philosopher *philo);
 
 /* utils */
 

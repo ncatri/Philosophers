@@ -9,7 +9,7 @@ t_rules	parse_arguments(int argc, char **argv)
 		rules.valid = FALSE;
 		return (rules);
 	}
-	rules.num_of_philo= get_number(argv[1]);
+	rules.num_of_philo = get_number(argv[1]);
 	rules.time_to_die = get_number(argv[2]);
 	rules.time_to_eat = get_number(argv[3]);
 	rules.time_to_sleep = get_number(argv[4]);
@@ -40,9 +40,9 @@ int	get_number(char *str)
 
 void	check_validity(t_rules *rules, int argc)
 {
-	if (rules->num_of_philo < 0 ||
-			rules->time_to_die < 0 ||
-			rules->time_to_eat < 0 ||
+	if (rules->num_of_philo < 0 || \
+			rules->time_to_die < 0 || \
+			rules->time_to_eat < 0 || \
 			rules->time_to_sleep < 0)
 		rules->valid = FALSE;
 	else

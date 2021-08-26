@@ -27,8 +27,8 @@ t_error	init_philosophers(t_philosopher **philo, t_rules *rules)
 		(*philo)[i].rules = rules;
 		(*philo)[i].num_of_eats = 0;
 		err_check = pthread_mutex_init(&(*philo)[i].eating, NULL);
-		if (pthread_create(&(*philo)[i].thread_id, NULL, dinner, &(*philo)[i]) != 0
-				|| err_check != 0 )
+		if (pthread_create(&(*philo)[i].thread_id, NULL, dinner, &(*philo)[i])
+				!= 0 || err_check != 0 )
 			return (ERROR);
 	}
 	rules->synchro = TRUE;
@@ -37,20 +37,20 @@ t_error	init_philosophers(t_philosopher **philo, t_rules *rules)
 
 t_error	init_mutexes(t_rules *rules)
 {
-	int i;
+	int	i;
 	int	err_check;
 
-	rules->forks = malloc(sizeof(pthread_mutex_t) *rules->num_of_philo);
+	rules->forks = malloc(sizeof(pthread_mutex_t) * rules->num_of_philo);
 	if (!rules->forks)
 		return (ERROR);
 	i = -1;
 	while (++i < rules->num_of_philo)
 	{
-		err_check = pthread_mutex_init(rules->forks + i, NULL);
+		err_check = pthread_mutex_init(&rules->forks[i], NULL);
 		if (err_check != 0)
 		{
 			while (--i >= 0)
-				pthread_mutex_destroy(rules->forks + i);
+				pthread_mutex_destroy(&rules->forks[i]);
 			return (ERROR);
 		}
 	}
@@ -58,14 +58,4 @@ t_error	init_mutexes(t_rules *rules)
 	if (err_check != 0)
 		return (ERROR);
 	return (SUCCESS);
-}
-
-void	free_forks(pthread_mutex_t *forks, int num_of_philo)
-{
-	int i;
-
-	i = -1;
-	while (++i < num_of_philo)
-		pthread_mutex_destroy(forks + i);
-	free(forks);
 }

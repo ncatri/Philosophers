@@ -1,7 +1,6 @@
 SRCS_FOLDER = src/
 SRCS_LIST = parsing.c 				\
 			parsing_utils.c			\
-			debug.c 				\
 			setup_functions.c		\
 			dinner.c				\
 			utils.c					\
