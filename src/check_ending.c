@@ -27,7 +27,10 @@ t_bool	max_eatings_reached(t_rules *rules, t_philosopher *philo)
 			max_reached = FALSE;
 	}
 	if (max_reached)
-		pthread_mutex_lock(&rules->speak);
+	{
+		pthread_mutex_lock(&philo->rules->speak);
+		printf("Everybody ate %d times!\n", rules->num_must_eat);
+	}
 	return (max_reached);
 }
 

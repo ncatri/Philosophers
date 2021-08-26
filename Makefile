@@ -13,7 +13,7 @@ RM = rm -f
 CC = clang
 CFLAGS = -Werror -Wall -Wextra -g -pthread -I $(HEADER)
 
-%.o: %.c
+%.o: %.c $(HEADER)/philosophers.h
 	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
